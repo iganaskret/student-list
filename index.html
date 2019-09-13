@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student List 1</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+
+  <body>
+    <h1 class="title">Student List 1</h1>
+
+    <form>
+      <label for="first">First Name</label>
+      <input type="checkbox" name="first" id="first" value="first" /><br />
+      <label for="last">Last Name</label>
+      <input type="checkbox" name="last" id="last" value="last" /><br />
+    </form>
+
+    <label id="house-selector">
+      <select name="theme" id="theme">
+        <option value="all">All</option>
+        <option value="red">Gryffindor</option>
+        <option value="blue">Ravenclaw</option>
+        <option value="brown">Hufflepuf</option>
+        <option value="green">Slytherin</option>
+      </select>
+    </label>
+
+    <main></main>
+
+    <div class="modal hide">
+      <button class="close-btn">&times</button>
+      <h1 class="modal-name"></h1>
+      <h2 class="modal-house"></h2>
+      <img src="https://via.placeholder.com/150" />
+    </div>
+
+    <template>
+      <article class="students">
+        <h1 class="name">Student Name</h1>
+        <h1 class="house">Student house</h1>
+        <section id="section"></section>
+      </article>
+    </template>
+
+    <script src="script.js"></script>
+
+    <footer>Made by Ksawery Karczewski</footer>
+  </body>
+</html>
