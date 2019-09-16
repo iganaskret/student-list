@@ -4,11 +4,11 @@ window.addEventListener("DOMContentLoaded", start);
 
 const people = [];
 let myLink = "http://petlatkea.dk/2019/students1991.json";
+const houseFilter = document.querySelector("#house-filter");
 
 function start() {
-  console.log("ready");
-
-  // TODO: Add event-listeners to filter and sort buttons
+  // Event-listeners to filter and sort buttons
+  houseFilter.addEventListener("change", filterList);
 
   loadJSON();
 }
@@ -35,33 +35,33 @@ function splitJSON(jsonData) {
     people.push(person);
   });
 
-  filterList(people);
+  filterList();
 }
 
-function filterList(list) {
-  list.forEach(studentsInHouse);
-  // TODO: Add filtering, according to setting
-  // if button is pressed, the value becomes the house we filter it with
-  //const filteredList = studentsInHouse(list.house);
-  sortList(filteredList);
-}
+function filterList() {
+  // list of students
+  console.log(people);
+  let filteredList = [];
 
-//filtering by house
-function studentsInHouse(house) {
-  if (house === "all") {
-    return list;
+  // check which filtering option is checked
+  const value = houseFilter[houseFilter.selectedIndex].value;
+
+  // if all then pass to sorting, else filter by that house
+  if (value === "all") {
+    filteredList = people;
   } else {
-    const filteredList = list.filter(filterByHouse);
-
-    function filterByHouse(person) {
-      if (person.house == house) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-    return filteredList;
+    filteredList = people.filter(filterByHouse);
   }
+
+  function filterByHouse(person) {
+    if (person.house === value) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  sortList(filteredList);
 }
 
 function sortList(list) {
