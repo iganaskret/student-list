@@ -11,3 +11,7 @@ th {
 tr:nth-child(even) {
   background-color: gray;
 }
+
+button {
+  border: 1px solid black;
+}

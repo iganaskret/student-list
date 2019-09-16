@@ -5,11 +5,16 @@ window.addEventListener("DOMContentLoaded", start);
 const people = [];
 let myLink = "http://petlatkea.dk/2019/students1991.json";
 const houseFilter = document.querySelector("#house-filter");
+const nameBtn = document.querySelector("#name-btn");
+const lastNameBtn = document.querySelector("#last-name-btn");
+const houseBtn = document.querySelector("#house-btn");
 
 function start() {
   // Event-listeners to filter and sort buttons
   houseFilter.addEventListener("change", filterList);
-
+  nameBtn.addEventListener("click", sortList);
+  lastNameBtn.addEventListener("click", sortList);
+  houseBtn.addEventListener("click", sortList);
   loadJSON();
 }
 
@@ -64,9 +69,25 @@ function filterList() {
   sortList(filteredList);
 }
 
-function sortList(list) {
-  // TODO: Sort the list that is received, before displaying it
-  displayList(list);
+// Sorting the list that is received, before displaying it
+function sortList() {
+  //check which sorting option is selected
+  let sortByValue = sortBy();
+  console.log(sortByValue);
+  // sort by chosen option
+  people.sort((a, b) => {
+    return a[sortByValue].localeCompare(b[sortByValue]);
+  });
+  displayList(people);
+  //remember to change what you give to the displaylist!
+}
+
+function sortBy() {
+  if (nameBtn.checked) {
+    return "name";
+  } else if (lastNameBtn.checked) {
+    return "lastName";
+  } else return "house";
 }
 
 function displayList(people) {
