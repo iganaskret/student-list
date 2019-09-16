@@ -24,19 +24,13 @@ function loadJSON() {
 
 function splitJSON(jsonData) {
   jsonData.forEach(jsonObject => {
-    // DONE: Create new object with cleaned data
+    // Create new object with cleaned data
     const person = Object.create(Person);
-    // DONE: Interpret jsonObject into Animal properties
-    console.log(jsonObject);
-
+    // Interpret jsonObject into Animal properties
     const text = jsonObject.fullname.split(" ");
     person.name = text[0];
     person.lastName = text[1];
-    // animal.name = jsonObject.fullname.split(" ")[0];
-    // animal.type = jsonObject.fullname.split(" ")[3];
-    // animal.desc = jsonObject.fullname.split(" ")[2];
     person.house = jsonObject.house;
-    console.log(person);
 
     people.push(person);
   });
@@ -45,9 +39,29 @@ function splitJSON(jsonData) {
 }
 
 function filterList(list) {
+  list.forEach(studentsInHouse);
   // TODO: Add filtering, according to setting
-  const filteredList = list; // right now, just don't filter anything
+  // if button is pressed, the value becomes the house we filter it with
+  //const filteredList = studentsInHouse(list.house);
   sortList(filteredList);
+}
+
+//filtering by house
+function studentsInHouse(house) {
+  if (house === "all") {
+    return list;
+  } else {
+    const filteredList = list.filter(filterByHouse);
+
+    function filterByHouse(person) {
+      if (person.house == house) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return filteredList;
+  }
 }
 
 function sortList(list) {
@@ -74,11 +88,19 @@ function displayPerson(person) {
   clone.querySelector("[data-field=last-name]").textContent = person.lastName;
   clone.querySelector("[data-field=house]").textContent = person.house;
 
+  //initiate displayModal
+  //displayModal(person);
+
   // append clone to list
   document.querySelector("#list tbody").appendChild(clone);
 }
 
-//prototype Animal
+function displayModal(person) {
+  //show modal when the name is clicked
+  person.addEventListener("click", console.log(person));
+}
+
+//prototype Person
 const Person = {
   name: "-name-",
   lastName: "-last-name-",
