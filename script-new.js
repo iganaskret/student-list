@@ -2,6 +2,7 @@
 
 window.addEventListener("DOMContentLoaded", start);
 
+const root = document.documentElement;
 const people = [];
 let myLink = "http://petlatkea.dk/2019/hogwartsdata/students.json";
 const houseFilter = document.querySelector("#house-filter");
@@ -49,14 +50,10 @@ function splitJSON(jsonData) {
       //if there's no last name
       if (text[1] == undefined) {
         person.lastName = "unknown";
-        person.middleName = "unknown";
-        person.nick = "unknown";
       }
       //if there are just two names
       else if (text[2] == undefined) {
         person.lastName = text[1];
-        person.middleName = "unknown";
-        person.nick = "unknown";
       }
       // if there's a nick
       else if (text[1][0] == '"') {
@@ -64,13 +61,11 @@ function splitJSON(jsonData) {
         person.nick = person.nick.slice(1);
         person.nick = person.nick.slice(0, person.nick.length - 1);
         person.lastName = text[2];
-        person.middleName = "unknown";
       }
       // if there's a middle name
       else {
         person.middleName = text[1];
         person.lastName = text[2];
-        person.nick = "unknown";
       }
     }
 
@@ -170,9 +165,9 @@ function displayPerson(person) {
   // set clone data
   clone.querySelector("[data-field=name]").textContent = person.name;
   clone.querySelector("[data-field=last-name]").textContent = person.lastName;
-  clone.querySelector("[data-field=middle-name]").textContent =
-    person.middleName;
-  clone.querySelector("[data-field=nick]").textContent = person.nick;
+  // clone.querySelector("[data-field=middle-name]").textContent =
+  //   person.middleName;
+  // clone.querySelector("[data-field=nick]").textContent = person.nick;
   clone.querySelector("[data-field=house]").textContent = person.house;
 
   let name = clone.querySelector("[data-field=name]");
@@ -183,8 +178,40 @@ function displayPerson(person) {
   function displayModal() {
     const modalName = document.querySelector(".modal-name");
     const modalHouse = document.querySelector(".modal-house");
-    modalName.textContent = person.name + " " + person.lastName;
+    const modalImg = document.querySelector(".modal-img");
+    if (person.middleName != "-middle-name-") {
+      modalName.textContent =
+        person.name + " " + person.middleName + " " + person.lastName;
+    } else if (person.nick != "-nick-") {
+      modalName.textContent =
+        person.name + ' "' + person.nick + '" ' + person.lastName;
+    } else {
+      modalName.textContent = person.name + " " + person.lastName;
+    }
     modalHouse.textContent = person.house;
+    // img path
+    modalImg.src =
+      "images/" +
+      person.lastName.toLowerCase() +
+      "_" +
+      person.name.substring(0, 1).toLowerCase() +
+      ".png";
+    // if there are two people with the same last name or no picture
+    let i = 0;
+    modalImg.addEventListener("error", imgError);
+    function imgError() {
+      if (i == 0) {
+        modalImg.src =
+          "images/" +
+          person.lastName.toLowerCase() +
+          "_" +
+          person.name.toLowerCase() +
+          ".png";
+        i++;
+      }
+    }
+    //set theme
+    modalTheme(person.house);
     modal.classList.remove("hide");
   }
 
@@ -195,6 +222,10 @@ function displayPerson(person) {
 // close modal
 function closeInfo() {
   modal.classList.add("hide");
+}
+
+function modalTheme(house) {
+  root.dataset.theme = house;
 }
 
 //prototype Person

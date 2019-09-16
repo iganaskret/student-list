@@ -51,3 +51,23 @@ button {
   float: right;
   color: var(--text-color);
 }
+
+html[data-theme="Gryffindor"] {
+  --text-color: white;
+  --bg-color: rgba(192, 29, 70);
+}
+
+html[data-theme="Hufflepuff"] {
+  --text-color: white;
+  --bg-color: rgba(204, 125, 6);
+}
+
+html[data-theme="Ravenclaw"] {
+  --text-color: white;
+  --bg-color: rgba(27, 24, 211);
+}
+
+html[data-theme="Slytherin"] {
+  --text-color: white;
+  --bg-color: rgba(16, 163, 82);
+}
