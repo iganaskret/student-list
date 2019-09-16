@@ -8,13 +8,14 @@ const houseFilter = document.querySelector("#house-filter");
 const nameBtn = document.querySelector("#name-btn");
 const lastNameBtn = document.querySelector("#last-name-btn");
 const houseBtn = document.querySelector("#house-btn");
+let sortBy = "house";
 
 function start() {
   // Event-listeners to filter and sort buttons
   houseFilter.addEventListener("change", filterList);
-  nameBtn.addEventListener("click", sortList);
-  lastNameBtn.addEventListener("click", sortList);
-  houseBtn.addEventListener("click", sortList);
+  nameBtn.addEventListener("click", changeSortBy);
+  lastNameBtn.addEventListener("click", changeSortBy);
+  houseBtn.addEventListener("click", changeSortBy);
   loadJSON();
 }
 
@@ -70,24 +71,23 @@ function filterList() {
 }
 
 // Sorting the list that is received, before displaying it
-function sortList() {
+function sortList(list) {
   //check which sorting option is selected
-  let sortByValue = sortBy();
-  console.log(sortByValue);
+  console.log(sortBy);
   // sort by chosen option
-  people.sort((a, b) => {
-    return a[sortByValue].localeCompare(b[sortByValue]);
+  list.sort((a, b) => {
+    return a[sortBy].localeCompare(b[sortBy]);
   });
-  displayList(people);
-  //remember to change what you give to the displaylist!
+  displayList(list);
 }
 
-function sortBy() {
+function changeSortBy() {
   if (nameBtn.checked) {
-    return "name";
+    sortBy = "name";
   } else if (lastNameBtn.checked) {
-    return "lastName";
-  } else return "house";
+    sortBy = "lastName";
+  } else sortBy = "house";
+  filterList();
 }
 
 function displayList(people) {
