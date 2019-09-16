@@ -70,10 +70,9 @@ function filterList() {
   sortList(filteredList);
 }
 
-// Sorting the list that is received, before displaying it
 function sortList(list) {
-  //check which sorting option is selected
-  console.log(sortBy);
+  // sorting the list that is received, before displaying it
+
   // sort by chosen option
   list.sort((a, b) => {
     return a[sortBy].localeCompare(b[sortBy]);
@@ -82,11 +81,13 @@ function sortList(list) {
 }
 
 function changeSortBy() {
+  // change the value by which the list is selected
   if (nameBtn.checked) {
     sortBy = "name";
   } else if (lastNameBtn.checked) {
     sortBy = "lastName";
   } else sortBy = "house";
+  // sorting the filtered list
   filterList();
 }
 
