@@ -4,7 +4,7 @@ window.addEventListener("DOMContentLoaded", start);
 
 const root = document.documentElement;
 const people = [];
-let myLink = "http://petlatkea.dk/2019/hogwartsdata/students.json";
+let myLink = "https://petlatkea.dk/2019/hogwartsdata/students.json";
 const houseFilter = document.querySelector("#house-filter");
 const nameBtn = document.querySelector("#name-btn");
 const lastNameBtn = document.querySelector("#last-name-btn");
