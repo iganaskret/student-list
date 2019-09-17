@@ -12,6 +12,10 @@ tr:nth-child(even) {
   background-color: gray;
 }
 
+tr {
+  cursor: pointer;
+}
+
 button {
   border: 1px solid black;
 }

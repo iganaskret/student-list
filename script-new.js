@@ -97,6 +97,7 @@ function trim(word) {
 
 function capitalize(word) {
   word = word.toLowerCase();
+  //if includes "-" capitalize properly + img
   return word.substring(0, 1).toUpperCase() + word.slice(1);
 }
 
@@ -170,7 +171,7 @@ function displayPerson(person) {
   // clone.querySelector("[data-field=nick]").textContent = person.nick;
   clone.querySelector("[data-field=house]").textContent = person.house;
 
-  let name = clone.querySelector("[data-field=name]");
+  let name = clone.querySelector("tr");
 
   // initiate displayModal
   name.addEventListener("click", displayModal);
