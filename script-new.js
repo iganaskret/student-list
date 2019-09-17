@@ -190,9 +190,9 @@ function displayPerson(person) {
   name.addEventListener("click", displayModal);
 
   function displayModal() {
-    const modalName = document.querySelector(".modal-name");
-    const modalHouse = document.querySelector(".modal-house");
-    const modalImg = document.querySelector(".modal-img");
+    const modalName = document.querySelector("[data-field=modal-name]");
+    const modalHouse = document.querySelector("[data-field=modal-house]");
+    const modalImg = document.querySelector("[data-field=modal-img]");
     if (person.middleName != "-middle-name-") {
       modalName.textContent =
         person.name + " " + person.middleName + " " + person.lastName;
@@ -249,8 +249,22 @@ function closeInfo() {
   modal.classList.add("hide");
 }
 
+// modal CSS themes
 function modalTheme(house) {
   root.dataset.theme = house;
+}
+
+// src: https://www.w3resource.com/javascript-exercises/javascript-math-exercise-23.php
+function create_UUID() {
+  var dt = new Date().getTime();
+  var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(
+    c
+  ) {
+    var r = (dt + Math.random() * 16) % 16 | 0;
+    dt = Math.floor(dt / 16);
+    return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
+  });
+  return uuid;
 }
 
 //prototype Person
@@ -259,5 +273,6 @@ const Person = {
   lastName: "-last-name-",
   middleName: "-middle-name-",
   nick: "-nick-",
-  house: "-house-"
+  house: "-house-",
+  id: "-id-"
 };
