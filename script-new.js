@@ -182,9 +182,6 @@ function displayPerson(person) {
   // set clone data
   clone.querySelector("[data-field=name]").textContent = person.name;
   clone.querySelector("[data-field=last-name]").textContent = person.lastName;
-  // clone.querySelector("[data-field=middle-name]").textContent =
-  //   person.middleName;
-  // clone.querySelector("[data-field=nick]").textContent = person.nick;
   clone.querySelector("[data-field=house]").textContent = person.house;
 
   let name = clone.querySelector("tr");
@@ -213,7 +210,7 @@ function displayPerson(person) {
       "_" +
       person.name.substring(0, 1).toLowerCase() +
       ".png";
-    // if there are two people with the same last name or no picture
+    // if there are two people with the same last name or no picture or last name wit a dash
     let i = 0;
     modalImg.addEventListener("error", imgError);
     function imgError() {
@@ -223,6 +220,17 @@ function displayPerson(person) {
           person.lastName.toLowerCase() +
           "_" +
           person.name.toLowerCase() +
+          ".png";
+        i++;
+      } else if (i == 1) {
+        let secondLastName = person.lastName.slice(
+          person.lastName.indexOf("-") + 1
+        );
+        modalImg.src =
+          "images/" +
+          secondLastName.toLowerCase() +
+          "_" +
+          person.name.substring(0, 1).toLowerCase() +
           ".png";
         i++;
       }
