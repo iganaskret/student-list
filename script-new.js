@@ -4,6 +4,9 @@ window.addEventListener("DOMContentLoaded", start);
 
 const root = document.documentElement;
 const people = [];
+let filteredList = [];
+let expelled = [];
+let clickedStudent;
 let myLink = "https://petlatkea.dk/2019/hogwartsdata/students.json";
 const houseFilter = document.querySelector("#house-filter");
 const nameBtn = document.querySelector("#name-btn");
@@ -21,6 +24,7 @@ function start() {
   houseBtn.addEventListener("click", changeSortBy);
   // event listener close the modal if "x" is clicked
   close.addEventListener("click", closeInfo);
+  modal.addEventListener("click", clickSomething);
 
   loadJSON();
 }
@@ -71,6 +75,7 @@ function splitJSON(jsonData) {
 
     person.name = text[0];
     person.house = jsonObject.house;
+    person.id = create_UUID();
 
     person.name = capitalize(person.name);
     person.lastName = capitalize(person.lastName);
@@ -120,7 +125,6 @@ function capitalize(word) {
 function filterList() {
   // list of students
   console.log(people);
-  let filteredList = [];
 
   // check which filtering option is checked
   const value = houseFilter[houseFilter.selectedIndex].value;
@@ -140,18 +144,18 @@ function filterList() {
     }
   }
 
-  sortList(filteredList);
+  sortList();
 }
 
-function sortList(list) {
+function sortList() {
   // sorting the list that is received, before displaying it
   if (sortBy != "") {
     // sort by chosen option
-    list.sort((a, b) => {
+    filteredList.sort((a, b) => {
       return a[sortBy].localeCompare(b[sortBy]);
     });
   }
-  displayList(list);
+  displayList(filteredList);
 }
 
 function changeSortBy() {
@@ -162,7 +166,7 @@ function changeSortBy() {
     sortBy = "lastName";
   } else sortBy = "house";
   // sorting the filtered list
-  filterList();
+  sortList();
 }
 
 function displayList(people) {
@@ -173,7 +177,7 @@ function displayList(people) {
   people.forEach(displayPerson);
 }
 
-function displayPerson(person) {
+function displayPerson(person, index) {
   // create clone
   const clone = document
     .querySelector("template#person")
@@ -189,10 +193,12 @@ function displayPerson(person) {
   // initiate displayModal
   name.addEventListener("click", displayModal);
 
-  function displayModal() {
+  function displayModal(event) {
+    clickedStudent = event.target.parentElement;
     const modalName = document.querySelector("[data-field=modal-name]");
     const modalHouse = document.querySelector("[data-field=modal-house]");
     const modalImg = document.querySelector("[data-field=modal-img]");
+    const removeBtn = document.querySelector("[data-action=remove]");
     if (person.middleName != "-middle-name-") {
       modalName.textContent =
         person.name + " " + person.middleName + " " + person.lastName;
@@ -203,6 +209,8 @@ function displayPerson(person) {
       modalName.textContent = person.name + " " + person.lastName;
     }
     modalHouse.textContent = person.house;
+    removeBtn.dataset.index = index;
+    removeBtn.dataset.attribute = person.id;
     // img path
     modalImg.src =
       "images/" +
@@ -235,6 +243,7 @@ function displayPerson(person) {
         i++;
       }
     }
+
     //set theme
     modalTheme(person.house);
     modal.classList.remove("hide");
@@ -265,6 +274,38 @@ function create_UUID() {
     return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
   });
   return uuid;
+}
+
+// expelling students
+function clickSomething(event) {
+  let element = event.target;
+  if (element.dataset.action === "remove") {
+    const index = element.dataset.attribute;
+
+    function findById(arr, index) {
+      function findId(person) {
+        if (index === person.id) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      return arr.findIndex(findId);
+    }
+    let listId = findById(people, index);
+    let filteredListId = findById(filteredList, index);
+
+    expelled.push(people[listId]);
+    console.log(expelled);
+
+    filteredList.splice(filteredListId, 1);
+    people.splice(listId, 1);
+
+    clickedStudent.remove();
+    modal.classList.add("hide");
+  } else {
+    console.log("not working");
+  }
 }
 
 //prototype Person
