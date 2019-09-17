@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Harry Potter";
+  src: url("harry_p/HARRYP__.TTF");
+}
+
+h1 {
+  font-family: "Harry Potter";
+  font-size: 3em;
+}
+
 table {
   border: 1px solid black;
   border-collapse: collapse;
