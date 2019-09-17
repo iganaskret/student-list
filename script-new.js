@@ -123,9 +123,6 @@ function capitalize(word) {
 }
 
 function filterList() {
-  // list of students
-  console.log(people);
-
   // check which filtering option is checked
   const value = houseFilter[houseFilter.selectedIndex].value;
 
@@ -211,6 +208,7 @@ function displayPerson(person, index) {
     modalHouse.textContent = person.house;
     removeBtn.dataset.index = index;
     removeBtn.dataset.attribute = person.id;
+    console.log(person.id);
     // img path
     modalImg.src =
       "images/" +
@@ -280,35 +278,39 @@ function create_UUID() {
 function clickSomething(event) {
   let element = event.target;
   if (element.dataset.action === "remove") {
-    const index = element.dataset.attribute;
+    const clickedId = element.dataset.attribute;
+    console.log(clickedId);
 
     function findById(arr, index) {
       function findId(person) {
         if (index === person.id) {
           return true;
         } else {
+          console.log("none");
           return false;
         }
       }
       return arr.findIndex(findId);
     }
-    let listId = findById(people, index);
-    let filteredListId = findById(filteredList, index);
-    console.log(listId);
+    let listId = findById(people, clickedId);
+    let filteredListId = findById(filteredList, clickedId);
+    console.table(people);
     console.log(people[listId]);
-
-    clickedStudent.remove();
+    console.log(listId);
+    //console.log(people[listId]);
 
     expelled.push(people[listId]);
-    console.log(expelled);
+    //console.log(expelled);
 
-    filteredList.splice(filteredListId, 1);
+    //filteredList.splice(filteredListId, 1);
     people.splice(listId, 1);
 
+    clickedStudent.remove();
     modal.classList.add("hide");
   } else {
     console.log("not working");
   }
+  console.table(people);
 }
 
 //prototype Person
