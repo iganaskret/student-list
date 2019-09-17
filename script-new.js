@@ -294,6 +294,10 @@ function clickSomething(event) {
     }
     let listId = findById(people, index);
     let filteredListId = findById(filteredList, index);
+    console.log(listId);
+    console.log(people[listId]);
+
+    clickedStudent.remove();
 
     expelled.push(people[listId]);
     console.log(expelled);
@@ -301,7 +305,6 @@ function clickSomething(event) {
     filteredList.splice(filteredListId, 1);
     people.splice(listId, 1);
 
-    clickedStudent.remove();
     modal.classList.add("hide");
   } else {
     console.log("not working");
