@@ -74,8 +74,12 @@ function splitJSON(jsonData) {
 
     person.name = capitalize(person.name);
     person.lastName = capitalize(person.lastName);
-    person.middleName = capitalize(person.middleName);
-    person.nick = capitalize(person.nick);
+    if (person.middleName != "-middle-name-") {
+      person.middleName = capitalize(person.middleName);
+    }
+    if (person.nick != "-nick-") {
+      person.nick = capitalize(person.nick);
+    }
     person.house = capitalize(person.house);
 
     people.push(person);
@@ -97,8 +101,20 @@ function trim(word) {
 
 function capitalize(word) {
   word = word.toLowerCase();
-  //if includes "-" capitalize properly + img
-  return word.substring(0, 1).toUpperCase() + word.slice(1);
+  let capitalizedWord = " ";
+  //if includes "-" capitalize properly
+  if (word.includes("-")) {
+    let dash = word.indexOf("-") + 1;
+    let capitalizedWord =
+      word.substring(0, 1).toUpperCase() +
+      word.substring(1, dash) +
+      word.substring(dash, dash + 1).toUpperCase() +
+      word.substring(dash + 1);
+    return capitalizedWord;
+  } else {
+    let capitalizedWord = word.substring(0, 1).toUpperCase() + word.slice(1);
+    return capitalizedWord;
+  }
 }
 
 function filterList() {
