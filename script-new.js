@@ -5,7 +5,7 @@ window.addEventListener("DOMContentLoaded", start);
 const root = document.documentElement;
 const people = [];
 let filteredList = [];
-let expelled = [];
+const expelled = [];
 let clickedStudent;
 let myLink = "https://petlatkea.dk/2019/hogwartsdata/students.json";
 const houseFilter = document.querySelector("#house-filter");
