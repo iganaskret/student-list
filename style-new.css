@@ -18,16 +18,17 @@ th {
   border: 1px solid black;
 }
 
-tr:nth-child(even) {
-  background-color: gray;
-}
-
 tr {
   cursor: pointer;
 }
 
+tr button {
+  display: inline;
+}
+
 button {
   border: 1px solid black;
+  position: relative;
 }
 
 .hide {
@@ -79,4 +80,18 @@ html[data-theme="Ravenclaw"] {
 html[data-theme="Slytherin"] {
   --text-color: white;
   --bg-color: rgba(16, 163, 82);
+}
+
+.expelled {
+  animation: expelling 2s ease-in-out forwards;
+}
+
+@keyframes expelling {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }

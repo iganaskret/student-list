@@ -76,6 +76,7 @@ function splitJSON(jsonData) {
     person.name = text[0];
     person.house = jsonObject.house;
     person.id = create_UUID();
+    person.prefect = false;
 
     person.name = capitalize(person.name);
     person.lastName = capitalize(person.lastName);
@@ -185,13 +186,18 @@ function displayPerson(person, index) {
   clone.querySelector("[data-field=last-name]").textContent = person.lastName;
   clone.querySelector("[data-field=house]").textContent = person.house;
 
-  let name = clone.querySelector("tr");
+  const prefect = clone.querySelector("[data-field=prefect]");
+  let name = clone.querySelector("[data-field=details]");
+
+  prefect.dataset.attribute = person.id;
+
+  prefect.addEventListener("click", makePrefect);
 
   // initiate displayModal
   name.addEventListener("click", displayModal);
 
   function displayModal(event) {
-    clickedStudent = event.target.parentElement;
+    clickedStudent = event.target.parentElement.parentElement;
     const modalName = document.querySelector("[data-field=modal-name]");
     const modalHouse = document.querySelector("[data-field=modal-house]");
     const modalImg = document.querySelector("[data-field=modal-img]");
@@ -289,8 +295,10 @@ function clickSomething(event) {
       }
       return arr.findIndex(findId);
     }
-    let listId = findById(people, clickedId);
-    let filteredListId = findById(filteredList, clickedId);
+    const listId = findById(people, clickedId);
+    const filteredListId = findById(filteredList, clickedId);
+    people[listId].prefect = false;
+    filteredList[filteredListId].prefect = false;
 
     expelled.push(filteredList[filteredListId]);
     console.table(expelled);
@@ -298,10 +306,50 @@ function clickSomething(event) {
     filteredList.splice(filteredListId, 1);
     people.splice(listId, 1);
 
-    clickedStudent.remove();
     modal.classList.add("hide");
+    console.log(clickedStudent);
+    setTimeout(() => {
+      clickedStudent.classList.add("expelled");
+    }, 800);
+    setTimeout(() => {
+      clickedStudent.remove();
+    }, 3100);
   } else {
     console.log("not working");
+  }
+}
+
+function makePrefect(event) {
+  //console.log(event.target.parentElement.parentElement);
+  //console.log(event.target.parentElement);
+  //console.log(clickedId);
+
+  let element = event.target.parentElement;
+  const clickedId = element.dataset.attribute;
+
+  function findById(arr, index) {
+    function findId(person) {
+      if (index === person.id) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return arr.findIndex(findId);
+  }
+  const listId = findById(people, clickedId);
+  const filteredListId = findById(filteredList, clickedId);
+  if (
+    people[listId].prefect == true ||
+    filteredList[filteredListId].prefect == true
+  ) {
+    people[listId].prefect = false;
+    filteredList[filteredListId].prefect = false;
+    element.parentElement.style.backgroundColor = "white";
+  } else {
+    people[listId].prefect = true;
+    filteredList[filteredListId].prefect = true;
+    element.parentElement.style.backgroundColor = "red";
   }
 }
 
@@ -312,5 +360,6 @@ const Person = {
   middleName: "-middle-name-",
   nick: "-nick-",
   house: "-house-",
-  id: "-id-"
+  id: "-id-",
+  prefect: "-prefect-"
 };
