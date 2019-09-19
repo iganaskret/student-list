@@ -31,6 +31,33 @@ function start() {
   loadJSON();
 }
 
+// loadFamilyJSON();
+
+// function loadFamilyJSON() {
+//   fetch(DOM.jsonLinkFamilies)
+//     .then(response => response.json())
+//     .then(jsonFamilyData => {
+//       prepareFamilyObject(jsonFamilyData);
+//     });
+// }
+// function prepareFamilyObject(jsonFamilyData) {
+//   //Create new object with cleaned data
+//   const family = Object.create(Family);
+//   //Interpret jsonObject into student properties
+//   family.halfBlood = jsonFamilyData.half;
+//   family.pureBlood = jsonFamilyData.pure;
+//   checkBloodStatus(family);
+// }
+// function checkBloodStatus(family) {
+//   if (family.halfBlood.includes(${student.lastName})) {
+//     DOM.modalBloodStatus.textContent = blood status: halfblood;
+//   } else if (family.pureBlood.includes(${student.lastName})) {
+//     DOM.modalBloodStatus.textContent = blood status: pureblood;
+//   } else {
+//     DOM.modalBloodStatus.textContent = blood status: non-magical parents;
+//   }
+// }
+
 function loadJSON() {
   fetch(myLink)
     .then(response => response.json())
@@ -368,13 +395,13 @@ function makePrefect(event) {
     people[listId].prefect = false;
     filteredList[filteredListId].prefect = false;
     prefects.splice(prefectsId, 1);
-    element.parentElement.style.backgroundColor = "white";
+    event.target.classList.add = "grayscale";
   } else if (counter < 2) {
     people[listId].prefect = true;
     filteredList[filteredListId].prefect = true;
     prefects.push(people[listId]);
     console.table(prefects);
-    element.parentElement.style.backgroundColor = "red";
+    event.target.classList.remove = "grayscale";
   } else {
     alert(
       `There can only be two prefects of each house! Revoke the prefect status from ${currentPrefects[0].name} or ${currentPrefects[1].name}!`
@@ -390,6 +417,12 @@ const Person = {
   nick: "-nick-",
   house: "-house-",
   gender: "-gender-",
+  blood: "-blood",
   id: "-id-",
   prefect: "-prefect-"
+};
+
+const Family = {
+  halfBlood: "-half-",
+  pureBlood: "-pure-"
 };
