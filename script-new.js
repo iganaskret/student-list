@@ -6,8 +6,10 @@ const root = document.documentElement;
 const people = [];
 let filteredList = [];
 const expelled = [];
+const prefects = [];
 let clickedStudent;
 let myLink = "https://petlatkea.dk/2019/hogwartsdata/students.json";
+let bloodStatusLink = "https://petlatkea.dk/2019/hogwartsdata/families.json";
 const houseFilter = document.querySelector("#house-filter");
 const nameBtn = document.querySelector("#name-btn");
 const lastNameBtn = document.querySelector("#last-name-btn");
@@ -77,6 +79,7 @@ function splitJSON(jsonData) {
     person.house = jsonObject.house;
     person.id = create_UUID();
     person.prefect = false;
+    person.gender = jsonObject.gender;
 
     person.name = capitalize(person.name);
     person.lastName = capitalize(person.lastName);
@@ -195,6 +198,9 @@ function displayPerson(person, index) {
 
   prefect.addEventListener("click", makePrefect);
 
+  //side information
+  document.querySelector("#nr-of-students").textContent = filteredList.length;
+
   // initiate displayModal
   name.addEventListener("click", displayModal);
 
@@ -299,6 +305,8 @@ function clickSomething(event) {
     }
     const listId = findById(people, clickedId);
     const filteredListId = findById(filteredList, clickedId);
+    const prefectsId = findById(prefects, clickedId);
+    prefects.splice(prefectsId, 1);
     people[listId].prefect = false;
     filteredList[filteredListId].prefect = false;
 
@@ -319,13 +327,12 @@ function clickSomething(event) {
   } else {
     console.log("not working");
   }
+  //side information
+  document.querySelector("#nr-of-students").textContent = filteredList.length;
 }
 
 function makePrefect(event) {
-  //console.log(event.target.parentElement.parentElement);
-  //console.log(event.target.parentElement);
-  //console.log(clickedId);
-
+  // who is the person we clicked
   let element = event.target.parentElement;
   const clickedId = element.dataset.attribute;
 
@@ -341,17 +348,37 @@ function makePrefect(event) {
   }
   const listId = findById(people, clickedId);
   const filteredListId = findById(filteredList, clickedId);
+  const prefectsId = findById(prefects, clickedId);
+  const personHouse = people[listId].house;
+  let counter = 0;
+  let currentPrefects = [];
+
+  for (let i = 0; i < prefects.length; i++) {
+    if (personHouse == prefects[i].house) {
+      counter++;
+      currentPrefects.push(prefects[i]);
+    }
+  }
+  console.log(counter);
+
   if (
     people[listId].prefect == true ||
     filteredList[filteredListId].prefect == true
   ) {
     people[listId].prefect = false;
     filteredList[filteredListId].prefect = false;
+    prefects.splice(prefectsId, 1);
     element.parentElement.style.backgroundColor = "white";
-  } else {
+  } else if (counter < 2) {
     people[listId].prefect = true;
     filteredList[filteredListId].prefect = true;
+    prefects.push(people[listId]);
+    console.table(prefects);
     element.parentElement.style.backgroundColor = "red";
+  } else {
+    alert(
+      `There can only be two prefects of each house! Revoke the prefect status from ${currentPrefects[0].name} or ${currentPrefects[1].name}!`
+    );
   }
 }
 
@@ -362,6 +389,7 @@ const Person = {
   middleName: "-middle-name-",
   nick: "-nick-",
   house: "-house-",
+  gender: "-gender-",
   id: "-id-",
   prefect: "-prefect-"
 };
