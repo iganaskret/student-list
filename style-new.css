@@ -1,11 +1,25 @@
 @font-face {
-  font-family: "Harry Potter";
-  src: url("harry_p/HARRYP__.TTF");
+  font-family: "Typo slab";
+  src: url("fonts/typo_slab/TypoSlab_light_demo.otf");
+}
+
+@font-face {
+  font-family: "Sports world";
+  src: url("fonts/sports_world/Sports\ World-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Whitin";
+  src: url("fonts/Whitin-CondensedBlack.otf");
 }
 
 h1 {
-  font-family: "Harry Potter";
+  font-family: "Whitin";
   font-size: 3em;
+}
+
+body {
+  font-family: "Typo slab";
 }
 
 table {

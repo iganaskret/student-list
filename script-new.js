@@ -129,7 +129,9 @@ function filterList() {
 
   // if all then pass to sorting, else filter by that house
   if (value === "all") {
-    filteredList = people;
+    filteredList = people.filter(student => {
+      return true;
+    });
   } else {
     filteredList = people.filter(filterByHouse);
   }
