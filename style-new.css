@@ -172,11 +172,44 @@ button {
 
 .modal {
   display: block;
-  width: 80%;
-  height: 80%;
+  width: 50%;
+  height: 45%;
   background-color: var(--bg-color);
   position: fixed;
-  top: 0%;
+  top: 10%;
+  left: 25%;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: repeat(4, 50px);
+}
+
+.modal-grid button {
+  width: 100px;
+  font-family: "Whitin";
+  border: none;
+  margin-left: 5%;
+  padding: 1px;
+  font-size: 1em;
+}
+
+.modal h1 {
+  border: none;
+}
+
+.modal h2 {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.modal img {
+  display: block;
+  margin-left: 5%;
+  margin-top: 5%;
+  grid-row: 1/4;
 }
 
 .modal-name,

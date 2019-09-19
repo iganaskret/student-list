@@ -82,12 +82,18 @@
         Number of students: <span id="nr-of-students"></span>
       </div>
     </main>
+
     <div class="modal hide">
       <button class="close-btn">&times</button>
       <h1 data-field="modal-name"></h1>
       <h2 data-field="modal-house"></h2>
-      <img data-field="modal-img" src="" />
-      <button data-action="remove">remove</button>
+      <div class="modal-grid">
+        <img data-field="modal-img" src="" />
+        <h3 data-field="modal-blood">Blood status:</h3>
+        <h3 data-field="modal-inq">Inquisitorial status:</h3>
+        <h3 data-field="modal-prefect">NAME is (NOT) a prefect</h3>
+        <button data-action="remove">EXPELL THIS STUDENT</button>
+      </div>
     </div>
 
     <template id="person">

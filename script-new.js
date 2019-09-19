@@ -31,33 +31,6 @@ function start() {
   loadJSON();
 }
 
-// loadFamilyJSON();
-
-// function loadFamilyJSON() {
-//   fetch(DOM.jsonLinkFamilies)
-//     .then(response => response.json())
-//     .then(jsonFamilyData => {
-//       prepareFamilyObject(jsonFamilyData);
-//     });
-// }
-// function prepareFamilyObject(jsonFamilyData) {
-//   //Create new object with cleaned data
-//   const family = Object.create(Family);
-//   //Interpret jsonObject into student properties
-//   family.halfBlood = jsonFamilyData.half;
-//   family.pureBlood = jsonFamilyData.pure;
-//   checkBloodStatus(family);
-// }
-// function checkBloodStatus(family) {
-//   if (family.halfBlood.includes(${student.lastName})) {
-//     DOM.modalBloodStatus.textContent = blood status: halfblood;
-//   } else if (family.pureBlood.includes(${student.lastName})) {
-//     DOM.modalBloodStatus.textContent = blood status: pureblood;
-//   } else {
-//     DOM.modalBloodStatus.textContent = blood status: non-magical parents;
-//   }
-// }
-
 function loadJSON() {
   fetch(myLink)
     .then(response => response.json())
@@ -227,6 +200,42 @@ function displayPerson(person, index) {
 
   //side information
   document.querySelector("#nr-of-students").textContent = filteredList.length;
+  //blood status
+  loadFamilyJSON();
+
+  function loadFamilyJSON() {
+    fetch(bloodStatusLink)
+      .then(response => response.json())
+      .then(jsonBloodData => {
+        prepareBloodObject(jsonBloodData);
+      });
+  }
+
+  function prepareBloodObject(jsonBloodData) {
+    //Create new object with cleaned data
+    const family = Object.create(Family);
+    //Interpret jsonObject into student properties
+    family.halfBlood = jsonBloodData.half;
+    family.pureBlood = jsonBloodData.pure;
+    console.log(family);
+    checkBloodStatus(family);
+  }
+
+  function checkBloodStatus(family) {
+    if (family.halfBlood.includes(`${person.lastName}`)) {
+      console.log("yes");
+      //clone.querySelector("[data-field=blood]").textContent = "halfblood";
+    } else if (family.pureBlood.includes(`${person.lastName}`)) {
+      console.log("no");
+      //clone.querySelector("[data-field=blood]").textContent = "pureblood";
+    } else {
+      console.log("maybe");
+      //clone.querySelector("[data-field=blood]").textContent =
+      ("non-magical parents");
+    }
+  }
+
+  //end blood status
 
   // initiate displayModal
   name.addEventListener("click", displayModal);
@@ -417,7 +426,7 @@ const Person = {
   nick: "-nick-",
   house: "-house-",
   gender: "-gender-",
-  blood: "-blood",
+  blood: "-blood-",
   id: "-id-",
   prefect: "-prefect-"
 };
