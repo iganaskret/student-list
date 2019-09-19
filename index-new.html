@@ -8,67 +8,71 @@
   </head>
 
   <body>
-    <h1 class="title">e-DAILY PROPHET</h1>
+    <header>
+      <div class="container">
+        <div class="header-box">
+          For students, teachers, parents and graduates
+        </div>
+        <h1 class="title">e-DAILY PROPHET</h1>
+        <h2>SEPTEMBER 1991</h2>
+      </div>
+      <div class="page-desc">
+        Official website of Hogwarts School of Witchcraft and Wizardry
+      </div>
+    </header>
 
-    <label id="house-selector">
-      <select name="house-filter" id="house-filter">
-        <option value="all">All</option>
-        <option value="Gryffindor">Gryffindor</option>
-        <option value="Ravenclaw">Ravenclaw</option>
-        <option value="Hufflepuff">Hufflepuff</option>
-        <option value="Slytherin">Slytherin</option>
-      </select>
-    </label>
+    <main>
+      <div class="content-main">
+        <h1 class="main-header">BREAKING NEWS</h1>
+        <h2 class="main-subheader">
+          The full list of accepted students is out now!
+        </h2>
+        <p class="main-p">
+          Click to get details, like picture or the blood status!
+        </p>
 
-    <label class="container">Sort by first name</label>
-    <input type="radio" id="name-btn" name="sort" />
-    <label class="container">Sort by last name</label>
-    <input type="radio" id="last-name-btn" name="sort" />
-    <label class="container">Sort by house</label>
-    <input type="radio" id="house-btn" name="sort" />
-
-    <table id="list">
-      <thead>
-        <tr>
-          <th>
-            First name
-          </th>
-          <th>
-            Last name
-          </th>
-          <th>
-            House
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- people template will be copied and inserted here -->
-      </tbody>
-    </table>
-
-    <div class="side">
-      Number of students: <span id="nr-of-students"></span>
-    </div>
-
-    <!-- <form>
-      <label for="first">First Name</label>
-      <input type="checkbox" name="first" id="first" value="first" /><br />
-      <label for="last">Last Name</label>
-      <input type="checkbox" name="last" id="last" value="last" /><br />
-    </form>
-
-    <label id="house-selector">
-      <select name="theme" id="theme">
-        <option value="all">All</option>
-        <option value="red">Gryffindor</option>
-        <option value="blue">Ravenclaw</option>
-        <option value="brown">Hufflepuf</option>
-        <option value="green">Slytherin</option>
-      </select>
-    </label>
-
-    <main></main>  -->
-
+        <div class="filter-sort">
+          <label id="house-selector">
+            <select name="house-filter" id="house-filter">
+              <option value="all">All</option>
+              <option value="Gryffindor">Gryffindor</option>
+              <option value="Ravenclaw">Ravenclaw</option>
+              <option value="Hufflepuff">Hufflepuff</option>
+              <option value="Slytherin">Slytherin</option>
+            </select>
+          </label>
+          <div class="sort">
+            <label class="sort-container">Sort by first name</label>
+            <input type="radio" id="name-btn" name="sort" />
+            <label class="sort-container">Sort by last name</label>
+            <input type="radio" id="last-name-btn" name="sort" />
+            <label class="sort-container">Sort by house</label>
+            <input type="radio" id="house-btn" name="sort" />
+          </div>
+        </div>
+        <table id="list">
+          <thead>
+            <tr>
+              <th>
+                First name
+              </th>
+              <th>
+                Last name
+              </th>
+              <th>
+                House
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- people template will be copied and inserted here -->
+          </tbody>
+        </table>
+      </div>
+      <div class="side">
+        Number of students: <span id="nr-of-students"></span>
+      </div>
+    </main>
     <div class="modal hide">
       <button class="close-btn">&times</button>
       <h1 data-field="modal-name"></h1>
@@ -90,7 +94,5 @@
     </template>
 
     <script src="script-new.js"></script>
-
-    <footer>Made by Iga Naskręt</footer>
   </body>
 </html>

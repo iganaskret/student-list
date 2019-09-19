@@ -1,11 +1,7 @@
+/* fonts */
 @font-face {
   font-family: "Typo slab";
   src: url("fonts/typo_slab/TypoSlab_light_demo.otf");
-}
-
-@font-face {
-  font-family: "Sports world";
-  src: url("fonts/sports_world/Sports\ World-Regular.ttf");
 }
 
 @font-face {
@@ -13,13 +9,109 @@
   src: url("fonts/Whitin-CondensedBlack.otf");
 }
 
-h1 {
-  font-family: "Whitin";
-  font-size: 3em;
+/* general */
+* {
+  background-image: url("prototype/img/bckg.png");
+  background-attachment: fixed;
 }
 
 body {
   font-family: "Typo slab";
+  margin: 0;
+  padding: 50px;
+}
+
+/* header */
+
+header {
+  margin-bottom: 40px;
+}
+
+h1 {
+  display: block;
+  font-family: "Whitin";
+  font-size: 5em;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  border-top: solid 2px black;
+  border-bottom: solid 2px black;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 15px;
+}
+
+h2 {
+  font-family: "Whitin";
+  font-size: 2em;
+}
+
+.header-box {
+  border: 2px black solid;
+  width: 150px;
+  height: 60px;
+  padding: 5px;
+  text-align: center;
+  font-family: "Whitin";
+  font-size: 18px;
+  margin-top: 15px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  text-align: center;
+  grid-gap: 20px;
+  text-align: center;
+}
+
+.page-desc {
+  font-family: "Whitin";
+  font-size: 1.5em;
+  text-align: center;
+}
+
+/* main grid*/
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+}
+
+.main-header {
+  border: none;
+  font-size: 4em;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+
+.main-subheader,
+.main-p {
+  padding: 5px;
+  margin: 0;
+}
+
+.main-p {
+  font-size: 1.3em;
+}
+
+.sort {
+  display: inline-block;
+}
+
+.filter-sort {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.sort-container {
+  margin-left: 15px;
+}
+
+#house-filter {
+  border: black solid 1px;
 }
 
 table {
@@ -107,5 +199,33 @@ html[data-theme="Slytherin"] {
 
   to {
     opacity: 0;
+  }
+}
+
+/* media queries */
+@media all and (max-width: 970px) {
+  h1 {
+    font-size: 3em;
+    padding-top: 10px;
+  }
+}
+
+@media all and (max-width: 760px) {
+  h1 {
+    font-size: 4em;
+    border: none;
+    padding-top: 0;
+  }
+  .header-box {
+    display: none;
+  }
+  h2 {
+    display: none;
+  }
+  .container {
+    display: block;
+  }
+  .sort-container {
+    margin-left: 0;
   }
 }
