@@ -194,6 +194,13 @@ button {
   width: 100%;
 }
 
+.side h3 {
+  font-family: "Whitin";
+}
+
+#expelled-names h3 {
+  font-family: "Whitin";
+}
 /* modal */
 
 .modal {

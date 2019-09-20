@@ -408,6 +408,20 @@ function clickSomething(event) {
       filteredList[filteredListId].prefect = false;
 
       expelled.push(filteredList[filteredListId]);
+      let i = expelled.length - 1;
+      const element = document.querySelector("#expelled-names");
+      if (i == 0) {
+        const firstLine = document.createElement("h3");
+        firstLine.textContent = "YOU HAVE EXPELLED:";
+        element.appendChild(firstLine);
+        const expelledP = document.createElement("p");
+        expelledP.textContent = expelled[i].name + " " + expelled[i].lastName;
+        element.appendChild(expelledP);
+      } else {
+        const expelledP = document.createElement("p");
+        expelledP.textContent = expelled[i].name + " " + expelled[i].lastName;
+        element.appendChild(expelledP);
+      }
 
       filteredList.splice(filteredListId, 1);
       people.splice(listId, 1);
