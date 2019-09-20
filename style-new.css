@@ -160,6 +160,15 @@ button {
   position: relative;
 }
 
+.details {
+  background-color: var(--brown);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+  cursor: pointer;
+}
+
 .hide {
   display: none;
 }
@@ -176,6 +185,7 @@ button {
   margin-right: 0;
   padding-left: 0;
   width: 40%;
+  cursor: pointer;
 }
 
 /* side */
@@ -189,17 +199,19 @@ button {
 .modal {
   display: block;
   width: 50%;
-  height: 45%;
+  height: 50%;
   background-color: var(--bg-color);
   position: fixed;
   top: 10%;
   left: 25%;
+  padding: 10px;
 }
 
 .modal-grid {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: repeat(4, 50px);
+  align-items: center;
 }
 
 .modal-grid button {
@@ -209,6 +221,9 @@ button {
   margin-left: 5%;
   padding: 1px;
   font-size: 1em;
+  grid-column: 3/4;
+  grid-row: 1/-1;
+  height: 50px;
 }
 
 .modal h1 {
@@ -235,7 +250,7 @@ button {
   display: block;
   margin-left: 5%;
   margin-top: 5%;
-  grid-row: 1/4;
+  grid-row: 1/-1;
 }
 
 .modal-name,

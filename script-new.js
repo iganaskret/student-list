@@ -382,9 +382,13 @@ function clickSomething(event) {
     const clickedId = element.dataset.attribute;
     if (clickedId == IgaId) {
       document.querySelector(".nasty").classList.remove("hide");
+      let audio = new Audio("hptheme_01.mp3");
+      audio.play();
       setTimeout(() => {
         document.querySelector(".nasty").classList.add("hide");
-      }, 2000);
+        audio.pause();
+        audio.currentTime = 0;
+      }, 8500);
     } else {
       function findById(arr, index) {
         function findId(person) {
