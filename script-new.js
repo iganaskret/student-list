@@ -199,7 +199,8 @@ function displayPerson(person, index) {
   prefect.addEventListener("click", makePrefect);
 
   //side information
-  document.querySelector("#nr-of-students").textContent = filteredList.length;
+  console.log(people);
+  document.querySelector("#nr-of-students").textContent = people.length;
   //blood status
   loadFamilyJSON();
 
@@ -217,19 +218,18 @@ function displayPerson(person, index) {
     //Interpret jsonObject into student properties
     family.halfBlood = jsonBloodData.half;
     family.pureBlood = jsonBloodData.pure;
-    console.log(family);
     checkBloodStatus(family);
   }
 
   function checkBloodStatus(family) {
     if (family.halfBlood.includes(`${person.lastName}`)) {
-      console.log("yes");
+      //console.log("yes");
       //clone.querySelector("[data-field=blood]").textContent = "halfblood";
     } else if (family.pureBlood.includes(`${person.lastName}`)) {
-      console.log("no");
+      //console.log("no");
       //clone.querySelector("[data-field=blood]").textContent = "pureblood";
     } else {
-      console.log("maybe");
+      //console.log("maybe");
       //clone.querySelector("[data-field=blood]").textContent =
       ("non-magical parents");
     }
@@ -347,13 +347,11 @@ function clickSomething(event) {
     filteredList[filteredListId].prefect = false;
 
     expelled.push(filteredList[filteredListId]);
-    console.table(expelled);
 
     filteredList.splice(filteredListId, 1);
     people.splice(listId, 1);
 
     modal.classList.add("hide");
-    console.log(clickedStudent);
     setTimeout(() => {
       clickedStudent.classList.add("expelled");
     }, 800);
@@ -364,7 +362,7 @@ function clickSomething(event) {
     console.log("not working");
   }
   //side information
-  document.querySelector("#nr-of-students").textContent = filteredList.length;
+  document.querySelector("#nr-of-students").textContent = people.length;
 }
 
 function makePrefect(event) {
@@ -404,13 +402,13 @@ function makePrefect(event) {
     people[listId].prefect = false;
     filteredList[filteredListId].prefect = false;
     prefects.splice(prefectsId, 1);
-    event.target.classList.add = "grayscale";
+    event.target.classList.add("grayscale");
   } else if (counter < 2) {
     people[listId].prefect = true;
     filteredList[filteredListId].prefect = true;
     prefects.push(people[listId]);
     console.table(prefects);
-    event.target.classList.remove = "grayscale";
+    event.target.classList.remove("grayscale");
   } else {
     alert(
       `There can only be two prefects of each house! Revoke the prefect status from ${currentPrefects[0].name} or ${currentPrefects[1].name}!`
