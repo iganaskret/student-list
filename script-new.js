@@ -8,6 +8,7 @@ let filteredList = [];
 const expelled = [];
 const prefects = [];
 let clickedStudent;
+const family = {};
 let myLink = "https://petlatkea.dk/2019/hogwartsdata/students.json";
 let bloodStatusLink = "https://petlatkea.dk/2019/hogwartsdata/families.json";
 const houseFilter = document.querySelector("#house-filter");
@@ -36,7 +37,10 @@ function loadJSON() {
     .then(response => response.json())
     .then(jsonData => {
       // when loaded, prepare objects
+      console.log("before split");
       splitJSON(jsonData);
+      console.log("after split");
+      loadFamilyJSON();
     });
 }
 
@@ -75,6 +79,11 @@ function splitJSON(jsonData) {
       }
     }
 
+    if (people.length == 0) {
+      console.log("tutaj iga");
+      people.push(person);
+    }
+
     person.name = text[0];
     person.house = jsonObject.house;
     person.id = create_UUID();
@@ -93,8 +102,23 @@ function splitJSON(jsonData) {
 
     people.push(person);
   });
+}
 
-  filterList();
+function loadFamilyJSON() {
+  console.log("family");
+  fetch(bloodStatusLink)
+    .then(response => response.json())
+    .then(jsonBloodData => {
+      prepareBloodObject(jsonBloodData);
+      filterList();
+    });
+}
+
+function prepareBloodObject(jsonBloodData) {
+  //Interpret jsonObject into student properties
+  console.log("family");
+  family.halfBlood = jsonBloodData.half;
+  family.pureBlood = jsonBloodData.pure;
 }
 
 function trim(word) {
@@ -202,37 +226,14 @@ function displayPerson(person, index) {
   console.log(people);
   document.querySelector("#nr-of-students").textContent = people.length;
   //blood status
-  loadFamilyJSON();
 
-  function loadFamilyJSON() {
-    fetch(bloodStatusLink)
-      .then(response => response.json())
-      .then(jsonBloodData => {
-        prepareBloodObject(jsonBloodData);
-      });
-  }
-
-  function prepareBloodObject(jsonBloodData) {
-    //Create new object with cleaned data
-    const family = Object.create(Family);
-    //Interpret jsonObject into student properties
-    family.halfBlood = jsonBloodData.half;
-    family.pureBlood = jsonBloodData.pure;
-    checkBloodStatus(family);
-  }
-
-  function checkBloodStatus(family) {
-    if (family.halfBlood.includes(`${person.lastName}`)) {
-      //console.log("yes");
-      //clone.querySelector("[data-field=blood]").textContent = "halfblood";
-    } else if (family.pureBlood.includes(`${person.lastName}`)) {
-      //console.log("no");
-      //clone.querySelector("[data-field=blood]").textContent = "pureblood";
-    } else {
-      //console.log("maybe");
-      //clone.querySelector("[data-field=blood]").textContent =
-      ("non-magical parents");
-    }
+  if (family.halfBlood.includes(`${person.lastName}`)) {
+    clone.querySelector("[data-field=blood]").textContent = "halfblood";
+  } else if (family.pureBlood.includes(`${person.lastName}`)) {
+    clone.querySelector("[data-field=blood]").textContent = "pureblood";
+  } else {
+    clone.querySelector("[data-field=blood]").textContent =
+      "non-magical parents";
   }
 
   //end blood status
@@ -427,9 +428,4 @@ const Person = {
   blood: "-blood-",
   id: "-id-",
   prefect: "-prefect-"
-};
-
-const Family = {
-  halfBlood: "-half-",
-  pureBlood: "-pure-"
 };
