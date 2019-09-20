@@ -13,7 +13,10 @@
 html {
   background-image: url("prototype/img/bckg.png");
   background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   --brown: #d7b596;
+  /* background-color: var(--brown); */
 }
 
 body {
@@ -77,7 +80,8 @@ h2 {
 
 main {
   display: grid;
-  grid-template-columns: 1fr 250px;
+  grid-template-columns: 1fr 300px;
+  grid-gap: 0;
 }
 
 .main-header {
@@ -130,13 +134,17 @@ thead {
 .head-row {
   padding-bottom: 10px;
   padding-top: 10px;
-  padding-left: 2px;
+  padding-left: 5px;
 }
 
 table {
   border: 1px solid black;
   border-collapse: collapse;
   width: 90%;
+}
+
+.badges {
+  width: 150px;
 }
 td,
 th {
@@ -155,17 +163,25 @@ button {
 .hide {
   display: none;
 }
-/* prefect */
+/* prefect and inquisit*/
 .grayscale {
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
 }
 
-.prefect {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 20%;
+.prefect,
+.inquisit {
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 0;
+  padding-left: 0;
+  width: 40%;
+}
+
+/* side */
+
+.umbridge {
+  width: 100%;
 }
 
 /* modal */
@@ -228,6 +244,20 @@ button {
   background-color: var(--bg-color);
   float: right;
   color: var(--text-color);
+}
+
+/* nasty modal */
+
+.nasty {
+  width: 100vw;
+  height: 100vh;
+  padding-top: 22%;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  background-color: black;
+  color: var(--brown);
+  text-align: center;
 }
 
 html[data-theme="Gryffindor"] {

@@ -63,7 +63,7 @@
                 House
               </th>
               <th>
-                Prefect
+                Status
               </th>
               <th>
                 Blood
@@ -79,12 +79,26 @@
         </table>
       </div>
       <div class="side">
-        Number of students: <span id="nr-of-students"></span>
+        <img src="prototype/img/umbridge.gif" class="umbridge" alt="umbridge" />
+        <p>Number of students: <span id="nr-of-students"></span></p>
+        <p>Expelled students: <span id="nr-of-expelled">0</span></p>
         <h3>NUMBER OF STUDENTS IN EACH HOUSE</h3>
-        <p>Gryffindor: <span id="nr-gryffindor"></span></p>
-        <p>Slytherin: <span id="nr-slytherin"></span></p>
-        <p>Ravenclaw: <span id="nr-ravenclaw"></span></p>
-        <p>Hufflepuff: <span id="nr-hufflepuff"></span></p>
+        <p>
+          Gryffindor:
+          <span data-field="house-counter" data-attribute="Gryffindor"></span>
+        </p>
+        <p>
+          Slytherin:
+          <span data-field="house-counter" data-attribute="Slytherin"></span>
+        </p>
+        <p>
+          Ravenclaw:
+          <span data-field="house-counter" data-attribute="Ravenclaw"></span>
+        </p>
+        <p>
+          Hufflepuff:
+          <span data-field="house-counter" data-attribute="Hufflepuff"></span>
+        </p>
       </div>
     </main>
 
@@ -101,6 +115,11 @@
       </div>
     </div>
 
+    <div class="nasty hide">
+      <h1>UMBRIDGE STINKS!</h1>
+      <h2>(and can't expel me!)</h2>
+    </div>
+
     <template id="person">
       <tr>
         <td data-field="name">NAME</td>
@@ -108,9 +127,19 @@
         <td data-field="middle-name" class="hide">MIDDLE NAME</td>
         <td data-field="nick" class="hide">NICKNAME</td>
         <td data-field="house">HOUSE</td>
-        <td data-field="prefect">
-          <img class="prefect grayscale" src="prototype/img/badge.png"
-          alt:"badge">
+        <td data-field="status" class="badges">
+          <img
+            data-field="prefect"
+            class="prefect grayscale"
+            src="prototype/img/badge.png"
+            alt="badge"
+          />
+          <img
+            data-field="inquisit"
+            class="inquisit grayscale"
+            src="prototype/img/Shield_Green.png"
+            alt="badge"
+          />
         </td>
         <td data-field="blood">BLOOD</td>
         <td data-field="details"><button class="details">DETAILS</button></td>

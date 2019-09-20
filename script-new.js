@@ -3,7 +3,20 @@
 window.addEventListener("DOMContentLoaded", start);
 
 const root = document.documentElement;
-const people = [];
+const IgaId = create_UUID();
+const people = [
+  {
+    name: "Iga",
+    lastName: "Naskret",
+    middleName: "-middle-name-",
+    nick: "-nick-",
+    house: "Ravenclaw",
+    gender: "girl",
+    blood: "-blood-",
+    id: IgaId,
+    prefect: false
+  }
+];
 let filteredList = [];
 const expelled = [];
 const prefects = [];
@@ -37,9 +50,7 @@ function loadJSON() {
     .then(response => response.json())
     .then(jsonData => {
       // when loaded, prepare objects
-      console.log("before split");
       splitJSON(jsonData);
-      console.log("after split");
       loadFamilyJSON();
     });
 }
@@ -79,15 +90,11 @@ function splitJSON(jsonData) {
       }
     }
 
-    if (people.length == 0) {
-      console.log("tutaj iga");
-      people.push(person);
-    }
-
     person.name = text[0];
     person.house = jsonObject.house;
     person.id = create_UUID();
     person.prefect = false;
+    person.inquisit = false;
     person.gender = jsonObject.gender;
 
     person.name = capitalize(person.name);
@@ -105,7 +112,6 @@ function splitJSON(jsonData) {
 }
 
 function loadFamilyJSON() {
-  console.log("family");
   fetch(bloodStatusLink)
     .then(response => response.json())
     .then(jsonBloodData => {
@@ -116,7 +122,6 @@ function loadFamilyJSON() {
 
 function prepareBloodObject(jsonBloodData) {
   //Interpret jsonObject into student properties
-  console.log("family");
   family.halfBlood = jsonBloodData.half;
   family.pureBlood = jsonBloodData.pure;
 }
@@ -170,7 +175,6 @@ function filterList() {
       return false;
     }
   }
-
   sortList();
 }
 
@@ -216,27 +220,55 @@ function displayPerson(person, index) {
   clone.querySelector("[data-field=house]").textContent = person.house;
 
   const prefect = clone.querySelector("[data-field=prefect]");
+  // prefect.classList.remove("grayscale");
+  const inquisit = clone.querySelector("[data-field=inquisit]");
   let name = clone.querySelector("[data-field=details]");
 
   prefect.dataset.attribute = person.id;
+  inquisit.dataset.attribute = person.id;
 
   prefect.addEventListener("click", makePrefect);
 
+  inquisit.addEventListener("click", makeInquisit);
+
   //side information
-  console.log(people);
   document.querySelector("#nr-of-students").textContent = people.length;
+
+  document.querySelectorAll("[data-field=house-counter]").forEach(field => {
+    const value = field.dataset.attribute;
+    field.textContent = countStudentsInHouse(value);
+  });
+
   //blood status
+  // if (family.halfBlood.includes(`${person.lastName}`)) {
+  //   clone.querySelector("[data-field=blood]").textContent = "halfblood";
+  // } else if (family.pureBlood.includes(`${person.lastName}`)) {
+  //   clone.querySelector("[data-field=blood]").textContent = "pureblood";
+  // } else {
+  //   clone.querySelector("[data-field=blood]").textContent =
+  //     "non-magical parents";
+  // }
 
+  //hacked blood status
   if (family.halfBlood.includes(`${person.lastName}`)) {
-    clone.querySelector("[data-field=blood]").textContent = "halfblood";
-  } else if (family.pureBlood.includes(`${person.lastName}`)) {
+    person.blood = "pureblood";
     clone.querySelector("[data-field=blood]").textContent = "pureblood";
+  } else if (family.pureBlood.includes(`${person.lastName}`)) {
+    let randomCounter = Math.floor(Math.random() * 3);
+    if (randomCounter == 1) {
+      person.blood = "pureblood";
+      clone.querySelector("[data-field=blood]").textContent = "pureblood";
+    } else if (randomCounter == 2) {
+      person.blood = "muggleborn";
+      clone.querySelector("[data-field=blood]").textContent = "muggleborn";
+    } else {
+      person.blood = "halfblood";
+      clone.querySelector("[data-field=blood]").textContent = "halfblood";
+    }
   } else {
-    clone.querySelector("[data-field=blood]").textContent =
-      "non-magical parents";
+    person.blood = "pureblood";
+    clone.querySelector("[data-field=blood]").textContent = "pureblood";
   }
-
-  //end blood status
 
   // initiate displayModal
   name.addEventListener("click", displayModal);
@@ -329,46 +361,66 @@ function clickSomething(event) {
   let element = event.target;
   if (element.dataset.action === "remove") {
     const clickedId = element.dataset.attribute;
-
-    function findById(arr, index) {
-      function findId(person) {
-        if (index === person.id) {
-          return true;
-        } else {
-          return false;
+    if (clickedId == IgaId) {
+      document.querySelector(".nasty").classList.remove("hide");
+      setTimeout(() => {
+        document.querySelector(".nasty").classList.add("hide");
+      }, 2000);
+    } else {
+      function findById(arr, index) {
+        function findId(person) {
+          if (index === person.id) {
+            return true;
+          } else {
+            return false;
+          }
         }
+        return arr.findIndex(findId);
       }
-      return arr.findIndex(findId);
+      const listId = findById(people, clickedId);
+      const filteredListId = findById(filteredList, clickedId);
+      const prefectsId = findById(prefects, clickedId);
+      prefects.splice(prefectsId, 1);
+      people[listId].prefect = false;
+      filteredList[filteredListId].prefect = false;
+
+      expelled.push(filteredList[filteredListId]);
+
+      filteredList.splice(filteredListId, 1);
+      people.splice(listId, 1);
+
+      modal.classList.add("hide");
+      setTimeout(() => {
+        clickedStudent.classList.add("expelled");
+      }, 800);
+      setTimeout(() => {
+        clickedStudent.remove();
+      }, 3100);
     }
-    const listId = findById(people, clickedId);
-    const filteredListId = findById(filteredList, clickedId);
-    const prefectsId = findById(prefects, clickedId);
-    prefects.splice(prefectsId, 1);
-    people[listId].prefect = false;
-    filteredList[filteredListId].prefect = false;
-
-    expelled.push(filteredList[filteredListId]);
-
-    filteredList.splice(filteredListId, 1);
-    people.splice(listId, 1);
-
-    modal.classList.add("hide");
-    setTimeout(() => {
-      clickedStudent.classList.add("expelled");
-    }, 800);
-    setTimeout(() => {
-      clickedStudent.remove();
-    }, 3100);
-  } else {
-    console.log("not working");
   }
   //side information
   document.querySelector("#nr-of-students").textContent = people.length;
+  document.querySelector("#nr-of-expelled").textContent = expelled.length;
+  document.querySelectorAll("[data-field=house-counter]").forEach(field => {
+    const value = field.dataset.attribute;
+    field.textContent = countStudentsInHouse(value);
+  });
 }
 
+function countStudentsInHouse(house) {
+  let houseCounter = 0;
+  for (let i = 0; i < people.length; i++) {
+    if (people[i].house == house) {
+      houseCounter++;
+    }
+  }
+  return houseCounter;
+}
+
+//making prefects
 function makePrefect(event) {
   // who is the person we clicked
-  let element = event.target.parentElement;
+  let element = event.target;
   const clickedId = element.dataset.attribute;
 
   function findById(arr, index) {
@@ -394,7 +446,6 @@ function makePrefect(event) {
       currentPrefects.push(prefects[i]);
     }
   }
-  console.log(counter);
 
   if (
     people[listId].prefect == true ||
@@ -417,6 +468,47 @@ function makePrefect(event) {
   }
 }
 
+//making inquisitors
+function makeInquisit(event) {
+  // who is the person we clicked
+  let element = event.target;
+  const clickedId = element.dataset.attribute;
+  function findById(arr, index) {
+    function findId(person) {
+      if (index === person.id) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    return arr.findIndex(findId);
+  }
+  const listId = findById(people, clickedId);
+  const filteredListId = findById(filteredList, clickedId);
+  const personHouse = people[listId].house;
+  const personBlood = people[listId].blood;
+  if (
+    people[listId].inquisit == true ||
+    filteredList[filteredListId].inquisit == true
+  ) {
+    people[listId].inquisit = false;
+    filteredList[filteredListId].inquisit = false;
+    event.target.classList.add("grayscale");
+  } else if (personBlood == "pureblood") {
+    people[listId].inquisit = true;
+    filteredList[filteredListId].inquisit = true;
+    event.target.classList.remove("grayscale");
+  } else if (personHouse == "Slytherin") {
+    people[listId].inquisit = true;
+    filteredList[filteredListId].inquisit = true;
+    event.target.classList.remove("grayscale");
+  } else {
+    alert(
+      `Only pureblooded and students from Slytherin can have Inquisitorial status!`
+    );
+  }
+}
+
 //prototype Person
 const Person = {
   name: "-name-",
@@ -424,8 +516,9 @@ const Person = {
   middleName: "-middle-name-",
   nick: "-nick-",
   house: "-house-",
-  gender: "-gender-",
+  inquisit: "-inquisit-",
   blood: "-blood-",
+  gender: "-gender-",
   id: "-id-",
   prefect: "-prefect-"
 };
