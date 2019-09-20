@@ -220,7 +220,6 @@ function displayPerson(person, index) {
   clone.querySelector("[data-field=house]").textContent = person.house;
 
   const prefect = clone.querySelector("[data-field=prefect]");
-  // prefect.classList.remove("grayscale");
   const inquisit = clone.querySelector("[data-field=inquisit]");
   let name = clone.querySelector("[data-field=details]");
 
@@ -279,6 +278,22 @@ function displayPerson(person, index) {
     const modalHouse = document.querySelector("[data-field=modal-house]");
     const modalImg = document.querySelector("[data-field=modal-img]");
     const removeBtn = document.querySelector("[data-action=remove]");
+    document.querySelector("[data-field=modal-blood]").textContent =
+      " " + person.blood;
+    if (person.inquisit == true) {
+      document.querySelector("[data-field=modal-inq]").textContent = " YES";
+    } else {
+      document.querySelector("[data-field=modal-inq]").textContent = " NO";
+    }
+
+    if (person.prefect == true) {
+      document.querySelector("[data-field=modal-prefect]").textContent =
+        person.name + " is a prefect";
+    } else {
+      document.querySelector("[data-field=modal-prefect]").textContent =
+        person.name + " is not a prefect";
+    }
+
     if (person.middleName != "-middle-name-") {
       modalName.textContent =
         person.name + " " + person.middleName + " " + person.lastName;
@@ -291,6 +306,10 @@ function displayPerson(person, index) {
     modalHouse.textContent = person.house;
     removeBtn.dataset.index = index;
     removeBtn.dataset.attribute = person.id;
+    // badge img path
+    document.querySelector("[data-field=modal-badge]").src =
+      "prototype/img/" + person.house.toLowerCase() + ".png";
+
     // img path
     modalImg.src =
       "images/" +
@@ -498,10 +517,20 @@ function makeInquisit(event) {
     people[listId].inquisit = true;
     filteredList[filteredListId].inquisit = true;
     event.target.classList.remove("grayscale");
+    setTimeout(() => {
+      people[listId].inquisit = false;
+      filteredList[filteredListId].inquisit = false;
+      event.target.classList.add("grayscale");
+    }, 3000);
   } else if (personHouse == "Slytherin") {
     people[listId].inquisit = true;
     filteredList[filteredListId].inquisit = true;
     event.target.classList.remove("grayscale");
+    setTimeout(() => {
+      people[listId].inquisit = false;
+      filteredList[filteredListId].inquisit = false;
+      event.target.classList.add("grayscale");
+    }, 3000);
   } else {
     alert(
       `Only pureblooded and students from Slytherin can have Inquisitorial status!`
