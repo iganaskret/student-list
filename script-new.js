@@ -39,8 +39,8 @@ function start() {
   lastNameBtn.addEventListener("click", changeSortBy);
   houseBtn.addEventListener("click", changeSortBy);
   // event listener close the modal if "x" is clicked
-  close.addEventListener("click", closeInfo);
-  modal.addEventListener("click", clickSomething);
+  close.addEventListener("click", closeModal);
+  modal.addEventListener("click", expelStudent);
 
   loadJSON();
 }
@@ -121,7 +121,7 @@ function loadFamilyJSON() {
 }
 
 function prepareBloodObject(jsonBloodData) {
-  //Interpret jsonObject into student properties
+  //pf
   family.halfBlood = jsonBloodData.half;
   family.pureBlood = jsonBloodData.pure;
 }
@@ -175,6 +175,17 @@ function filterList() {
       return false;
     }
   }
+  // THIS PART DOESN'T WORK
+  filteredList.forEach(student => {
+    console.log(student.prefect);
+    if (student.prefect == true) {
+      document.querySelectorAll("[data-field=prefect]").forEach(btn => {
+        if (btn.dataset.attribute == student.id) {
+          btn.classList.remove("grayscale");
+        }
+      });
+    }
+  });
   sortList();
 }
 
@@ -340,6 +351,14 @@ function displayPerson(person, index) {
           person.name.substring(0, 1).toLowerCase() +
           ".png";
         i++;
+      } else if (i == 2) {
+        let wrongName = person.name.substring(0, person.name.length - 1) + "e";
+        modalImg.src =
+          "images/" +
+          person.lastName.toLowerCase() +
+          "_" +
+          wrongName.toLowerCase() +
+          ".png";
       }
     }
 
@@ -353,7 +372,7 @@ function displayPerson(person, index) {
 }
 
 // close modal
-function closeInfo() {
+function closeModal() {
   modal.classList.add("hide");
 }
 
@@ -376,7 +395,7 @@ function create_UUID() {
 }
 
 // expelling students
-function clickSomething(event) {
+function expelStudenl(event) {
   let element = event.target;
   if (element.dataset.action === "remove") {
     const clickedId = element.dataset.attribute;
