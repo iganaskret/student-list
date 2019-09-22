@@ -121,7 +121,7 @@ function loadFamilyJSON() {
 }
 
 function prepareBloodObject(jsonBloodData) {
-  //pf
+  //Interpret jsonObject into student properties
   family.halfBlood = jsonBloodData.half;
   family.pureBlood = jsonBloodData.pure;
 }
@@ -392,10 +392,11 @@ function create_UUID() {
     return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
   });
   return uuid;
+  th;
 }
 
 // expelling students
-function expelStudenl(event) {
+function expelStudent(event) {
   let element = event.target;
   if (element.dataset.action === "remove") {
     const clickedId = element.dataset.attribute;
@@ -479,7 +480,7 @@ function makePrefect(event) {
   let element = event.target;
   const clickedId = element.dataset.attribute;
 
-  function findById(arr, index) {
+  function findPrefectById(arr, index) {
     function findId(person) {
       if (index === person.id) {
         return true;
@@ -489,9 +490,9 @@ function makePrefect(event) {
     }
     return arr.findIndex(findId);
   }
-  const listId = findById(people, clickedId);
-  const filteredListId = findById(filteredList, clickedId);
-  const prefectsId = findById(prefects, clickedId);
+  const listId = findPrefectById(people, clickedId);
+  const filteredListId = findPrefectById(filteredList, clickedId);
+  const prefectsId = findPrefectById(prefects, clickedId);
   const personHouse = people[listId].house;
   let counter = 0;
   let currentPrefects = [];
@@ -529,7 +530,7 @@ function makeInquisit(event) {
   // who is the person we clicked
   let element = event.target;
   const clickedId = element.dataset.attribute;
-  function findById(arr, index) {
+  function findInquisitById(arr, index) {
     function findId(person) {
       if (index === person.id) {
         return true;
@@ -539,8 +540,8 @@ function makeInquisit(event) {
     }
     return arr.findIndex(findId);
   }
-  const listId = findById(people, clickedId);
-  const filteredListId = findById(filteredList, clickedId);
+  const listId = findInquisitById(people, clickedId);
+  const filteredListId = findInquisitById(filteredList, clickedId);
   const personHouse = people[listId].house;
   const personBlood = people[listId].blood;
   if (
